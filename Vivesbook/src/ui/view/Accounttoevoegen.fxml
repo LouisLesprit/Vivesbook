@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.AccounttoevoegenController">
+   <children>
+      <Button fx:id="btnAddUser" layoutX="202.0" layoutY="282.0" mnemonicParsing="false" onAction="#btnAddUserClicked" text="Maken" />
+      <Label layoutX="91.0" layoutY="74.0" text="Naam" />
+      <Label layoutX="91.0" layoutY="95.0" text="Voornaam" />
+      <Label layoutX="76.0" layoutY="125.0" text="Login" />
+      <Label layoutX="77.0" layoutY="153.0" text="Passwoord" />
+      <Label layoutX="77.0" layoutY="183.0" text="Emailadres" />
+      <Label layoutX="77.0" layoutY="212.0" text="Geslacht" />
+      <TextField fx:id="txtNaam" layoutX="161.0" layoutY="70.0" />
+      <TextField fx:id="txtVoornaam" layoutX="161.0" layoutY="100.0" />
+      <TextField fx:id="txtLogin" layoutX="173.0" layoutY="130.0" />
+      <TextField fx:id="txtPaswoord" layoutX="173.0" layoutY="158.0" />
+      <TextField fx:id="txtEmailadres" layoutX="180.0" layoutY="188.0" />
+      <TextField fx:id="txtGeslacht" layoutX="161.0" layoutY="217.0" />
+   </children>
+</AnchorPane>
