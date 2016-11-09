@@ -20,8 +20,9 @@ public class AccountTrans implements InterfaceAccountTrans {
     public void accountToevoegen(Account acc) throws DBException, ApplicationException {
         if(acc == null){
             throw new ApplicationException("Er werd geen account ingevuld");
-            //checkAlleVeldenIngevuld(acc);
         }
+        
+        checkAlleVeldenIngevuld(acc);
         
         // Bestaat account reeds?
         AccountDB accDb= new AccountDB();
@@ -46,6 +47,15 @@ public class AccountTrans implements InterfaceAccountTrans {
         }
         if(a.getLogin() == null || a.getLogin().equals("")){
             throw new ApplicationException("Login niet ingevuld");
+        }
+        if(a.getPaswoord() == null || a.getPaswoord().equals("")){
+            throw new ApplicationException("Paswoord niet ingevuld");
+        }
+        if(a.getEmailadres() == null || a.getPaswoord().equals("")){
+            throw new ApplicationException("Emailadres niet ingevuld");
+        }
+        if(a.getGeslacht() == null){
+            throw new ApplicationException("Geslacht niet ingevuld");
         }
     }
 }

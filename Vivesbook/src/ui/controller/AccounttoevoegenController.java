@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import transactie.AccountTrans;
 import ui.VIVESbook;
@@ -26,14 +27,17 @@ public class AccounttoevoegenController implements Initializable{
     private VIVESbook mainApp;
     
     @FXML
-    private TextField txtNaam, txtVoornaam, txtLogin, txtPaswoord, txtEmailadres, txtGeslacht;
+    private TextField txtNaam, txtVoornaam, txtLogin, txtPaswoord, txtEmailadres;
+    
+    @FXML
+    private ComboBox cbGeslacht; // De ComboBox voor het geslacht
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        initializeChoiceBox();
     }
 
     /**
@@ -46,6 +50,11 @@ public class AccounttoevoegenController implements Initializable{
         this.mainApp = mainApp;
     }
     
+    private void initializeChoiceBox(){
+        cbGeslacht.getItems().add(Geslacht.M);
+        cbGeslacht.getItems().add(Geslacht.V);
+    }
+    
     @FXML
     private void btnAddUserClicked(ActionEvent event){
         Account newAccount = new Account();
@@ -55,14 +64,19 @@ public class AccounttoevoegenController implements Initializable{
         newAccount.setLogin(txtLogin.getText());
         newAccount.setPaswoord(txtPaswoord.getText());
         newAccount.setEmailadres(txtEmailadres.getText());
-        newAccount.setGeslacht(Geslacht.valueOf(txtGeslacht.getText()));
+        newAccount.setGeslacht((Geslacht) cbGeslacht.getSelectionModel().getSelectedItem());
 
         AccountTrans at = new AccountTrans();
         
         try{
             at.accountToevoegen(newAccount);
-        }catch(Exception e){
+        }catch(Exception e){ // NOG AANPASSEN
             System.out.println(e);
         }
+    }
+    
+    @FXML
+    private void btnLoginClicked(ActionEvent event){
+        mainApp.laadLoginScherm();
     }
 }
