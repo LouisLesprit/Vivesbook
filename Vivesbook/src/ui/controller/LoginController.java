@@ -33,7 +33,9 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try{
-            // als de server niet werkt kan het een paar seconden duren voordat het venster getoond wordt wanneer je terugkomt van een ander scherm
+            /* als de server niet werkt kan het een paar seconden duren voordat het venster getoond wordt wanneer je terugkomt van een ander scherm
+            dit weg doen in toekomst?
+            */
             if(ConnectionManager.getConnection().isValid(0)){ 
                 lblStatus.setText("Connected");
             }

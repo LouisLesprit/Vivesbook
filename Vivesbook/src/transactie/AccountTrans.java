@@ -25,17 +25,32 @@ public class AccountTrans implements InterfaceAccountTrans {
         checkAlleVeldenIngevuld(acc);
         
         // Bestaat account reeds?
-        AccountDB accDb= new AccountDB();
-        if(accDb.zoekAccountOpLogin(acc.getLogin()) != null){
+        AccountDB accDB= new AccountDB();
+        if(accDB.zoekAccountOpLogin(acc.getLogin()) != null){
             throw new ApplicationException("Account bestaat al");
         }
         
-        accDb.toevoegenAccount(acc);
+        accDB.toevoegenAccount(acc);
     }
 
     @Override
     public void accountWijzigen(Account acc) throws DBException, ApplicationException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(acc == null){
+            throw new ApplicationException("Er werd geen account ingevuld");
+        }
+        
+        checkAlleVeldenIngevuld(acc);
+        
+        AccountDB accDB = new AccountDB();
+        
+        if(accDB.zoekAccountOpLogin(acc.getLogin()) != null){
+            throw new ApplicationException("Er bestaat al een account met dezelfde login");
+        }
+        if(accDB.zoekAccountOpEmail(acc.getEmailadres()) != null){
+            throw new ApplicationException("Er bestaat al een account met hetzelfde emailadres");
+        }
+        
+        accDB.wijzigenAccount(acc);
     }
 
     private void checkAlleVeldenIngevuld(Account a) throws ApplicationException{
