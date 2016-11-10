@@ -23,7 +23,7 @@ import ui.VIVESbook;
  */
 public class AccounttoevoegenController implements Initializable{
     
-    // referentie naar mainapp (start)
+    // referentie naar mainapp (start) 
     private VIVESbook mainApp;
     
     @FXML
