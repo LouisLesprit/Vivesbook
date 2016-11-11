@@ -141,6 +141,19 @@ public class AccountDB implements InterfaceAccountDB {
         }
     }
 
-    
-
+    public void verwijderenAccount(Account teVerwijderenAccount) throws DBException{
+        try(Connection conn = ConnectionManager.getConnection();){
+            try(PreparedStatement stmt = conn.prepareStatement(
+                    "DELETE FROM account WHERE login = ?");){
+                
+                stmt.setString(1, teVerwijderenAccount.getLogin());
+                stmt.execute();
+                
+            }catch(SQLException sqlEx){
+                throw new DBException("SQL-Exception in toevoegenAccount - statement" + sqlEx);
+            }
+        }catch(SQLException sqlEx){
+            throw new DBException("SQL-exception in toevoegenAccount - connection" + sqlEx);
+        }
+    }
 }

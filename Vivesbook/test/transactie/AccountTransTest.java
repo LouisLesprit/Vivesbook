@@ -66,7 +66,11 @@ public class AccountTransTest {
     @After
     // Het account dat in de setup gemaakt werd, terug verijwderen, maar mag er verwijderd worden????
     public void tearDown() {
-        
+        try{
+            accountDB.verwijderenAccount(account);
+        }catch(DBException ex){
+            System.out.println("-tearDown-" + ex);
+        }
     }
 
     /**
@@ -101,7 +105,11 @@ public class AccountTransTest {
         
         account.setNaam(null);
         
-        accountDB.toevoegenAccount(account);
+        try{
+            accountTrans.accountToevoegen(account);
+        }catch(ApplicationException ex){
+            
+        }
     }
     
     @Test
@@ -110,7 +118,11 @@ public class AccountTransTest {
         
         account.setNaam("");
         
-        accountDB.toevoegenAccount(account);
+        try{
+            accountTrans.accountToevoegen(account);
+        }catch(ApplicationException ex){
+            
+        }
     }
     
     @Test
@@ -119,7 +131,11 @@ public class AccountTransTest {
         
         account.setVoornaam(null);
         
-        accountDB.toevoegenAccount(account);
+        try{
+            accountTrans.accountToevoegen(account);
+        }catch(ApplicationException ex){
+            
+        }
     }
     
     @Test
@@ -128,7 +144,11 @@ public class AccountTransTest {
         
         account.setVoornaam("");
         
-        accountDB.toevoegenAccount(account);
+        try{
+            accountTrans.accountToevoegen(account);
+        }catch(ApplicationException ex){
+            
+        }
     }
     
     @Test
@@ -137,7 +157,11 @@ public class AccountTransTest {
         
         account.setLogin(null);
         
-        accountDB.toevoegenAccount(account);
+        try{
+            accountTrans.accountToevoegen(account);
+        }catch(ApplicationException ex){
+            
+        }
     }
     
     @Test
@@ -146,7 +170,11 @@ public class AccountTransTest {
         
         account.setLogin("");
         
-        accountDB.toevoegenAccount(account);
+        try{
+            accountTrans.accountToevoegen(account);
+        }catch(ApplicationException ex){
+            
+        }
     }
     
     @Test
@@ -155,7 +183,11 @@ public class AccountTransTest {
         
         account.setPaswoord(null);
         
-        accountDB.toevoegenAccount(account);
+        try{
+            accountTrans.accountToevoegen(account);
+        }catch(ApplicationException ex){
+            
+        }
     }
     
     @Test
@@ -164,7 +196,11 @@ public class AccountTransTest {
         
         account.setPaswoord("");
         
-        accountDB.toevoegenAccount(account);
+        try{
+            accountTrans.accountToevoegen(account);
+        }catch(ApplicationException ex){
+            
+        }
     }
     
     @Test
@@ -173,7 +209,11 @@ public class AccountTransTest {
         
         account.setEmailadres(null);
         
-        accountDB.toevoegenAccount(account);
+        try{
+            accountTrans.accountToevoegen(account);
+        }catch(ApplicationException ex){
+            
+        }
     }
     
     @Test
@@ -182,7 +222,11 @@ public class AccountTransTest {
         
         account.setEmailadres("");
         
-        accountDB.toevoegenAccount(account);
+        try{
+            accountTrans.accountToevoegen(account);
+        }catch(ApplicationException ex){
+            
+        }
     }
     
     @Test
@@ -191,6 +235,10 @@ public class AccountTransTest {
         
         account.setGeslacht(null);
         
-        accountDB.toevoegenAccount(account);
+        try{
+            accountTrans.accountToevoegen(account);
+        }catch(ApplicationException ex){
+            
+        }
     }
 }

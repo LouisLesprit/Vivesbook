@@ -46,6 +46,11 @@ public class AccountDBTest {
     
     @After
     public void tearDown() {
+        try{
+            accountDB.verwijderenAccount(account);
+        }catch(DBException ex){
+            System.out.println("-tearDown-" + ex);
+        }
     }
 
     /**
@@ -106,4 +111,57 @@ public class AccountDBTest {
         fail("The test case is a prototype.");
     }
     
+    @Test
+    public void testToevoegenAccountNaamNull() throws DBException{
+        thrown.expect(DBException.class);
+        
+        account.setNaam(null);
+        
+        accountDB.toevoegenAccount(account);
+    }
+    
+    @Test
+    public void testToevoegenAccountVoornaamNull() throws DBException{
+        thrown.expect(DBException.class);
+        
+        account.setVoornaam(null);
+        
+        accountDB.toevoegenAccount(account);
+    }
+    
+    @Test
+    public void testToevoegenAccountLoginNull() throws DBException{
+        thrown.expect(DBException.class);
+        
+        account.setLogin(null);
+        
+        accountDB.toevoegenAccount(account);
+    }
+    
+    @Test
+    public void testToevoegenAccountPaswoordNull() throws DBException{
+        thrown.expect(DBException.class);
+        
+        account.setPaswoord(null);
+        
+        accountDB.toevoegenAccount(account);
+    }
+    
+    @Test
+    public void testToevoegenAccountEmailadresNull() throws DBException{
+        thrown.expect(DBException.class);
+        
+        account.setEmailadres(null);
+        
+        accountDB.toevoegenAccount(account);
+    }
+    
+    @Test
+    public void testToevoegenAccountGeslachtNull() throws DBException{
+        thrown.expect(DBException.class);
+        
+        account.setGeslacht(null);
+        
+        accountDB.toevoegenAccount(account);
+    }
 }
