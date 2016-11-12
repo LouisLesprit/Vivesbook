@@ -11,10 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import ui.controller.AccounttoevoegenController;
-import ui.controller.LoginController;
-import ui.controller.PostController;
-import ui.controller.PosttoevoegenController;
+import ui.controller.*;
 
 /**
  *
@@ -120,7 +117,30 @@ public class VIVESbook extends Application {
             System.out.println("!!! - " + e.getMessage());
         }
     }
+    
+    public void laadHomeScherm(){
+        try {
+            FXMLLoader loader = new FXMLLoader(this.getClass().getResource(
+              "view/Home.fxml"));
+            
+            // controller ophalen
+            Parent root = loader.load();
 
+            System.out.println(loader.getController() == null);
+            HomeController controller = (HomeController) loader.getController();
+            
+            // referentie naar hier bewaren in de controller
+            controller.setMainApp(this);
+            //controller.setData(accountLogin);
+
+            Scene scene = new Scene(root);
+            stage.setTitle("VIVESbook - Home");
+            stage.setScene(scene);
+
+        } catch (IOException e) {
+            System.out.println("!!! - " + e.getMessage());
+        }
+    }
    
     public static void main(String[] args) {
         launch(args);

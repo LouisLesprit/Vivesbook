@@ -83,13 +83,13 @@ public class AccountDB implements InterfaceAccountDB {
                     
                     return returnAccount;
                 }catch(SQLException sqlEx){
-                    throw new DBException("SQL-exception in zoekAccountOpLogin - resultset " + sqlEx);
+                    throw new DBException("SQL-exception in zoekAccountOpEmail - resultset " + sqlEx);
                 }
             }catch(SQLException sqlEx){
-                throw new DBException("SQL-Exception in zoekAccountOpLogin - statement" + sqlEx);
+                throw new DBException("SQL-Exception in zoekAccountOpEmail - statement" + sqlEx);
             }
         }catch(SQLException sqlEx){
-            throw new DBException("SQL-exception in zoekAccountOpLogin - connection" + sqlEx);
+            throw new DBException("SQL-exception in zoekAccountOpEmail - connection" + sqlEx);
         }    
     }
 
@@ -104,7 +104,13 @@ public class AccountDB implements InterfaceAccountDB {
                 stmt.setString(3, account.getLogin());
                 stmt.setString(4, account.getPaswoord());
                 stmt.setString(5, account.getEmailadres());
-                stmt.setString(6, account.getGeslacht().name());
+                
+                if(account.getGeslacht() == null){
+                    stmt.setNull(6, java.sql.Types.NULL);
+                }else{
+                    stmt.setString(6, account.getGeslacht().name());
+                }
+
                 stmt.execute();
                 
             }catch(SQLException sqlEx){
@@ -120,17 +126,22 @@ public class AccountDB implements InterfaceAccountDB {
         try(Connection conn = ConnectionManager.getConnection();){
             try(PreparedStatement stmt = conn.prepareStatement("UPDATE account SET naam = ?, "
                     + "voornaam = ?, "
-                    + "login = ?, "
                     + "paswoord = ?, "
                     + "emailadres = ?, "
-                    + "geslacht = ?");){
+                    + "geslacht = ? WHERE login = ?");){
                 
                 stmt.setString(1, teWijzigenAccount.getNaam());
                 stmt.setString(2, teWijzigenAccount.getVoornaam());
-                stmt.setString(3, teWijzigenAccount.getLogin());
-                stmt.setString(4, teWijzigenAccount.getPaswoord());
-                stmt.setString(5, teWijzigenAccount.getEmailadres());
-                stmt.setString(6, teWijzigenAccount.getGeslacht().name());
+                stmt.setString(3, teWijzigenAccount.getPaswoord());
+                stmt.setString(4, teWijzigenAccount.getEmailadres());
+                
+                if(teWijzigenAccount.getGeslacht() == null){
+                    stmt.setNull(5, java.sql.Types.NULL);
+                }else{
+                    stmt.setString(5, teWijzigenAccount.getGeslacht().name());
+                }
+                
+                stmt.setString(6, teWijzigenAccount.getLogin());
                 
                 stmt.execute();
            }catch(SQLException sqlEx){
@@ -150,10 +161,10 @@ public class AccountDB implements InterfaceAccountDB {
                 stmt.execute();
                 
             }catch(SQLException sqlEx){
-                throw new DBException("SQL-Exception in toevoegenAccount - statement" + sqlEx);
+                throw new DBException("SQL-Exception in verwijderenAccount - statement" + sqlEx);
             }
         }catch(SQLException sqlEx){
-            throw new DBException("SQL-exception in toevoegenAccount - connection" + sqlEx);
+            throw new DBException("SQL-exception in verwijderenAccount - connection" + sqlEx);
         }
     }
 }

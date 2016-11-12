@@ -5,45 +5,39 @@
  */
 package ui.controller;
 
+import bags.Account;
+import exception.DBException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import ui.VIVESbook;
-import database.connect.ConnectionManager;
+import transactie.AccountTrans;
 
 /**
  * FXML Controller class
  *
- * @author Katrien.Deleu
+ * @author Anon
  */
-public class LoginController implements Initializable {
+public class HomeController implements Initializable {
 
-    // referentie naar mainapp (start)
+    // referentie naar mainapp (start) 
     private VIVESbook mainApp;
     
+    private Account account;
+    
     @FXML
-    private Label lblStatus;
-
+    private Label lblLogin;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try{
-            /* als de server niet werkt kan het een paar seconden duren voordat het venster getoond wordt wanneer je terugkomt van een ander scherm
-            dit weg doen in toekomst?
-            */
-            if(ConnectionManager.getConnection().isValid(0)){ 
-                lblStatus.setText("Connected");
-            }
-        }catch(Exception e){ // NOG AAN TE PASSEN
-            
-        }
-    }
-
+        lblLogin.setText(account.getLogin());
+    }    
+    
     /**
      * Referentie naar mainApp (start) instellen
      *
@@ -54,14 +48,12 @@ public class LoginController implements Initializable {
         this.mainApp = mainApp;
     }
     
-    @FXML
-    private void btnLoginClicked(ActionEvent event){
-        mainApp.laadHomeScherm();
+    public void setData(String accountLogin){
+        try{
+            AccountTrans accTrans = new AccountTrans();
+            account = accTrans.zoekAccountOpLogin(accountLogin);
+        }catch(DBException ex){
+            System.out.println("setData - " + accountLogin + " - " + ex);
+        }
     }
-    
-    @FXML
-    private void btnNewUserClicked(ActionEvent event){
-        mainApp.laadAccounttoevoegenScherm();
-    }
-
 }

@@ -11,9 +11,7 @@ import datatype.Geslacht;
 import exception.ApplicationException;
 import exception.DBException;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Rule;
@@ -37,34 +35,20 @@ public class AccountTransTest {
         accountTrans = new AccountTrans();
     }
     
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
     @Before
     // Een account maken
     public void setUp() { 
-        try{
-            account = new Account();
-            account.setNaam("Defoort");
-            account.setVoornaam("Mieke");
-            account.setLogin("miekedefoort");
-            account.setPaswoord("wachtwoord123");
-            account.setEmailadres("miekedefoort@hotmail.com");
-            account.setGeslacht(Geslacht.V);
-            
-            accountTrans.accountToevoegen(account);
-        }catch(DBException | ApplicationException ex){
-            System.out.println("-setUp-" + ex);
-        }
+        account = new Account();
+        account.setNaam("Defoort");
+        account.setVoornaam("Mieke");
+        account.setLogin("miekedefoort");
+        account.setPaswoord("wachtwoord123");
+        account.setEmailadres("miekedefoort@hotmail.com");
+        account.setGeslacht(Geslacht.V);
     }
     
     @After
-    // Het account dat in de setup gemaakt werd, terug verijwderen, maar mag er verwijderd worden????
+    // Het account dat in de setup gemaakt werd, terug verijwderen
     public void tearDown() {
         try{
             accountDB.verwijderenAccount(account);
@@ -74,170 +58,185 @@ public class AccountTransTest {
     }
 
     /**
-     * Test of accountToevoegen method, of class AccountTrans.
+     * Een null object proberen toevoegen
      */
     @Test
-    public void testAccountToevoegen() throws Exception {
-        System.out.println("accountToevoegen");
-        Account acc = null;
-        AccountTrans instance = new AccountTrans();
-        instance.accountToevoegen(acc);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testNullAccountToevoegen() throws ApplicationException {
+        thrown.expect(ApplicationException.class);
+        thrown.expectMessage("Er werd geen account ingevuld");
+        
+        try{
+            accountTrans.accountToevoegen(null);
+        }catch(DBException ex){
+            
+        }
     }
 
     /**
-     * Test of accountWijzigen method, of class AccountTrans.
+     * Een null object proberen wijzigen
      */
     @Test
-    public void testAccountWijzigen() throws Exception {
-        System.out.println("accountWijzigen");
-        Account acc = null;
-        AccountTrans instance = new AccountTrans();
-        instance.accountWijzigen(acc);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testNullAccountWijzigen() throws ApplicationException {
+        thrown.expect(ApplicationException.class);
+        thrown.expectMessage("Er werd geen account ingevuld");
+        
+        try{
+            accountTrans.accountWijzigen(null);
+        }catch(DBException ex){
+            
+        }
     }
     
     @Test
-    public void testToevoegenAccountNaamNull() throws DBException{
-        thrown.expect(DBException.class);
+    public void testToevoegenAccountNaamNull() throws ApplicationException{
+        thrown.expect(ApplicationException.class);
+        thrown.expectMessage("Naam niet ingevuld");
         
         account.setNaam(null);
         
         try{
             accountTrans.accountToevoegen(account);
-        }catch(ApplicationException ex){
+        }catch(DBException ex){
             
         }
     }
     
     @Test
-    public void testToevoegenAccountNaamLeeg() throws DBException{
-        thrown.expect(DBException.class);
+    public void testToevoegenAccountNaamLeeg() throws ApplicationException{
+        thrown.expect(ApplicationException.class);
+        thrown.expectMessage("Naam niet ingevuld");
         
         account.setNaam("");
         
         try{
             accountTrans.accountToevoegen(account);
-        }catch(ApplicationException ex){
+        }catch(DBException ex){
             
         }
     }
     
     @Test
-    public void testToevoegenAccountVoornaamNull() throws DBException{
-        thrown.expect(DBException.class);
+    public void testToevoegenAccountVoornaamNull() throws ApplicationException{
+        thrown.expect(ApplicationException.class);
+        thrown.expectMessage("Voornaam niet ingevuld");
         
         account.setVoornaam(null);
         
         try{
             accountTrans.accountToevoegen(account);
-        }catch(ApplicationException ex){
+        }catch(DBException ex){
             
         }
     }
     
     @Test
-    public void testToevoegenAccountVoornaamLeeg() throws DBException{
-        thrown.expect(DBException.class);
+    public void testToevoegenAccountVoornaamLeeg() throws ApplicationException{
+        thrown.expect(ApplicationException.class);
+        thrown.expectMessage("Voornaam niet ingevuld");
         
         account.setVoornaam("");
         
         try{
             accountTrans.accountToevoegen(account);
-        }catch(ApplicationException ex){
+        }catch(DBException ex){
             
         }
     }
     
     @Test
-    public void testToevoegenAccountLoginNull() throws DBException{
-        thrown.expect(DBException.class);
+    public void testToevoegenAccountLoginNull() throws ApplicationException{
+        thrown.expect(ApplicationException.class);
+        thrown.expectMessage("Login niet ingevuld");
         
         account.setLogin(null);
         
         try{
             accountTrans.accountToevoegen(account);
-        }catch(ApplicationException ex){
+        }catch(DBException ex){
             
         }
     }
     
     @Test
-    public void testToevoegenAccountLoginLeeg() throws DBException{
-        thrown.expect(DBException.class);
+    public void testToevoegenAccountLoginLeeg() throws ApplicationException{
+        thrown.expect(ApplicationException.class);
+        thrown.expectMessage("Login niet ingevuld");
         
         account.setLogin("");
         
         try{
             accountTrans.accountToevoegen(account);
-        }catch(ApplicationException ex){
+        }catch(DBException ex){
             
         }
     }
     
     @Test
-    public void testToevoegenAccountPaswoordNull() throws DBException{
-        thrown.expect(DBException.class);
+    public void testToevoegenAccountPaswoordNull() throws ApplicationException{
+        thrown.expect(ApplicationException.class);
+        thrown.expectMessage("Paswoord niet ingevuld");
         
         account.setPaswoord(null);
         
         try{
             accountTrans.accountToevoegen(account);
-        }catch(ApplicationException ex){
+        }catch(DBException ex){
             
         }
     }
     
     @Test
-    public void testToevoegenAccountPaswoordLeeg() throws DBException{
-        thrown.expect(DBException.class);
+    public void testToevoegenAccountPaswoordLeeg() throws ApplicationException{
+        thrown.expect(ApplicationException.class);
+        thrown.expectMessage("Paswoord niet ingevuld");
         
         account.setPaswoord("");
         
         try{
             accountTrans.accountToevoegen(account);
-        }catch(ApplicationException ex){
+        }catch(DBException ex){
             
         }
     }
     
     @Test
-    public void testToevoegenAccountEmailadresNull() throws DBException{
-        thrown.expect(DBException.class);
+    public void testToevoegenAccountEmailadresNull() throws ApplicationException{
+        thrown.expect(ApplicationException.class);
+        thrown.expectMessage("Emailadres niet ingevuld");
         
         account.setEmailadres(null);
         
         try{
             accountTrans.accountToevoegen(account);
-        }catch(ApplicationException ex){
+        }catch(DBException ex){
             
         }
     }
     
     @Test
-    public void testToevoegenAccountEmailadresLeeg() throws DBException{
-        thrown.expect(DBException.class);
+    public void testToevoegenAccountEmailadresLeeg() throws ApplicationException{
+        thrown.expect(ApplicationException.class);
+        thrown.expectMessage("Emailadres niet ingevuld");
         
         account.setEmailadres("");
         
         try{
             accountTrans.accountToevoegen(account);
-        }catch(ApplicationException ex){
+        }catch(DBException ex){
             
         }
     }
     
     @Test
-    public void testToevoegenAccountGeslachtNull() throws DBException{
-        thrown.expect(DBException.class);
+    public void testToevoegenAccountGeslachtNull() throws ApplicationException{
+        thrown.expect(ApplicationException.class);
+        thrown.expectMessage("Geslacht niet ingevuld");
         
         account.setGeslacht(null);
         
         try{
             accountTrans.accountToevoegen(account);
-        }catch(ApplicationException ex){
+        }catch(DBException ex){
             
         }
     }

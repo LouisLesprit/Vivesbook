@@ -61,7 +61,24 @@ public class PostDB implements InterfacePostDB {
 
     @Override
     public void verwijderenPost(Integer id) throws DBException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try(Connection conn = ConnectionManager.getConnection();){
+            try(PreparedStatement stmt = conn.prepareStatement(
+                    "DELETE FROM post WHERE id = ?");){
+                
+                if(id == null){
+                    stmt.setNull(1, java.sql.Types.NULL);
+                }else{
+                    stmt.setInt(1, id);
+                }
+                
+                stmt.execute();
+                
+            }catch(SQLException sqlEx){
+                throw new DBException("SQL-Exception in verwijderenPost - statement" + sqlEx);
+            }
+        }catch(SQLException sqlEx){
+            throw new DBException("SQL-exception in verwijderenPost - connection" + sqlEx);
+        }
     }
 
     @Override

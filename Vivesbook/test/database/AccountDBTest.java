@@ -33,7 +33,6 @@ public class AccountDBTest {
     
     @Before
     public void setUp() {
-        
             account = new Account();
             account.setNaam("Defoort");
             account.setVoornaam("Mieke");
@@ -41,7 +40,6 @@ public class AccountDBTest {
             account.setPaswoord("wachtwoord123");
             account.setEmailadres("miekedefoort@hotmail.com");
             account.setGeslacht(Geslacht.V);
-        
     }
     
     @After
@@ -53,62 +51,21 @@ public class AccountDBTest {
         }
     }
 
-    /**
-     * Test of zoekAccountOpLogin method, of class AccountDB.
-     */
     @Test
-    public void testZoekAccountOpLogin() throws Exception {
-        System.out.println("zoekAccountOpLogin");
-        String login = "";
-        AccountDB instance = new AccountDB();
-        Account expResult = null;
-        Account result = instance.zoekAccountOpLogin(login);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of zoekAccountOpEmail method, of class AccountDB.
-     */
-    @Test
-    public void testZoekAccountOpEmail() throws Exception {
-        System.out.println("zoekAccountOpEmail");
-        String email = "";
-        AccountDB instance = new AccountDB();
-        Account expResult = null;
-        Account result = instance.zoekAccountOpEmail(email);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Positieve test om een account toe te voegen
-     */
-    @Test
-    public void testToevoegenAccount() throws Exception {
-        System.out.println("toevoegenAccount");
-        Account account = null;
-        AccountDB instance = new AccountDB();
-        instance.toevoegenAccount(account);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-    
-    
-
-    /**
-     * Test of wijzigenAccount method, of class AccountDB.
-     */
-    @Test
-    public void testWijzigenAccount() throws Exception {
-        System.out.println("wijzigenAccount");
-        Account teWijzigenAccount = null;
-        AccountDB instance = new AccountDB();
-        instance.wijzigenAccount(teWijzigenAccount);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testToevoegenAccount(){
+        try{
+            accountDB.toevoegenAccount(account);
+            Account ophaalAcc = accountDB.zoekAccountOpLogin(account.getLogin());
+            
+            assertEquals("Defoort", ophaalAcc.getNaam());
+            assertEquals("Mieke", ophaalAcc.getVoornaam());
+            assertEquals("miekedefoort", ophaalAcc.getLogin());
+            assertEquals("wachtwoord123", ophaalAcc.getPaswoord());
+            assertEquals("miekedefoort@hotmail.com", ophaalAcc.getEmailadres());
+            assertEquals(Geslacht.V, ophaalAcc.getGeslacht());
+        }catch(DBException ex){
+            System.out.println("-testToevoegenAccount-" + ex);
+        }
     }
     
     @Test
@@ -160,7 +117,8 @@ public class AccountDBTest {
     public void testToevoegenAccountGeslachtNull() throws DBException{
         thrown.expect(DBException.class);
         
-        account.setGeslacht(null);
+        account.setGeslacht(null); /* account.getGeslacht().name() in toevoegenAccount zal hierdoor nullpointer geven.....,
+                                        moet je dit controleren in toevoegenAccount() of anders oplossen?*/
         
         accountDB.toevoegenAccount(account);
     }

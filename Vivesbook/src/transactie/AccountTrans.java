@@ -15,6 +15,16 @@ import exception.DBException;
  * @author Katrien.Deleu
  */
 public class AccountTrans implements InterfaceAccountTrans {
+    
+    public Account zoekAccountOpLogin(String login) throws DBException {
+        AccountDB accDB = new AccountDB();
+        return accDB.zoekAccountOpLogin(login);
+    }
+    
+    public Account zoekAccountOpEmail(String email) throws DBException {
+        AccountDB accDB = new AccountDB();
+        return accDB.zoekAccountOpEmail(email);
+    }
 
     @Override
     public void accountToevoegen(Account acc) throws DBException, ApplicationException {
@@ -24,8 +34,9 @@ public class AccountTrans implements InterfaceAccountTrans {
         
         checkAlleVeldenIngevuld(acc);
         
+        AccountDB accDB = new AccountDB();
+        
         // Bestaat account reeds?
-        AccountDB accDB= new AccountDB();
         if(accDB.zoekAccountOpLogin(acc.getLogin()) != null){
             throw new ApplicationException("Account bestaat al");
         }
@@ -66,7 +77,7 @@ public class AccountTrans implements InterfaceAccountTrans {
         if(a.getPaswoord() == null || a.getPaswoord().equals("")){
             throw new ApplicationException("Paswoord niet ingevuld");
         }
-        if(a.getEmailadres() == null || a.getPaswoord().equals("")){
+        if(a.getEmailadres() == null || a.getEmailadres().equals("")){
             throw new ApplicationException("Emailadres niet ingevuld");
         }
         if(a.getGeslacht() == null){
