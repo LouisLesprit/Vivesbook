@@ -35,7 +35,7 @@ public class HomeController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        lblLogin.setText(account.getLogin());
+        
     }    
     
     /**
@@ -52,6 +52,10 @@ public class HomeController implements Initializable {
         try{
             AccountTrans accTrans = new AccountTrans();
             account = accTrans.zoekAccountOpLogin(accountLogin);
+            
+            if(account != null){
+                lblLogin.setText(account.getLogin());
+            }
         }catch(DBException ex){
             System.out.println("setData - " + accountLogin + " - " + ex);
         }
