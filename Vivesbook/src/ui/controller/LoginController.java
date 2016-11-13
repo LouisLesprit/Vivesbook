@@ -82,5 +82,4 @@ public class LoginController implements Initializable {
     private void btnNewUserClicked(ActionEvent event){
         mainApp.laadAccounttoevoegenScherm();
     }
-
 }

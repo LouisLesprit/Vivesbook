@@ -9,6 +9,7 @@ import bags.Account;
 import exception.DBException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -52,5 +53,21 @@ public class HomeController implements Initializable {
     public void setData(Account account){
         this.account = account;
         lblLogin.setText(account.getLogin());
+    }
+    
+    @FXML
+    private void btnLogoutClicked(ActionEvent event){
+        /*
+        in de toekomst:
+        
+        try{
+            AccountTrans accTrans = new accountTrans();
+            accTrans.uitloggenAccount(account);
+        }catch(DBException ex){
+            System.out.println("btnLogoutClicked - " + ex);
+        }
+        */
+        
+        mainApp.laadLoginScherm();
     }
 }
