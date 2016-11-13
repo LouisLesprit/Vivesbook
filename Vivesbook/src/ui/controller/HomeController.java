@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import ui.VIVESbook;
 import transactie.AccountTrans;
 
@@ -48,16 +49,8 @@ public class HomeController implements Initializable {
         this.mainApp = mainApp;
     }
     
-    public void setData(String accountLogin){
-        try{
-            AccountTrans accTrans = new AccountTrans();
-            account = accTrans.zoekAccountOpLogin(accountLogin);
-            
-            if(account != null){
-                lblLogin.setText(account.getLogin());
-            }
-        }catch(DBException ex){
-            System.out.println("setData - " + accountLogin + " - " + ex);
-        }
+    public void setData(Account account){
+        this.account = account;
+        lblLogin.setText(account.getLogin());
     }
 }

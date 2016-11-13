@@ -25,6 +25,11 @@ public class AccountTrans implements InterfaceAccountTrans {
         AccountDB accDB = new AccountDB();
         return accDB.zoekAccountOpEmail(email);
     }
+    
+    public Account inloggenAccount(String login, String paswoord) throws DBException{
+        AccountDB accDB = new AccountDB();
+        return accDB.inloggenAccount(login, paswoord);
+    }
 
     @Override
     public void accountToevoegen(Account acc) throws DBException, ApplicationException {

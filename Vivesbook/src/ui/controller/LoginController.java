@@ -13,6 +13,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import ui.VIVESbook;
 import database.connect.ConnectionManager;
+import exception.DBException;
+import javafx.scene.control.TextField;
+import transactie.AccountTrans;
+import bags.Account;
 
 /**
  * FXML Controller class
@@ -26,6 +30,9 @@ public class LoginController implements Initializable {
     
     @FXML
     private Label lblStatus;
+    
+    @FXML
+    private TextField txtLogin, txtPaswoord;
 
     /**
      * Initializes the controller class.
@@ -56,7 +63,19 @@ public class LoginController implements Initializable {
     
     @FXML
     private void btnLoginClicked(ActionEvent event){
-        mainApp.laadHomeScherm();
+        try{
+            AccountTrans accTrans = new AccountTrans();
+            Account account = accTrans.inloggenAccount(txtLogin.getText(), txtPaswoord.getText());
+            
+            if(account != null){
+                mainApp.laadHomeScherm(account);
+            }else{
+                lblStatus.setText("Login of paswoord niet correct");
+            }
+        }catch(DBException ex){
+            System.out.println("setData - " + ex);
+        }
+        
     }
     
     @FXML

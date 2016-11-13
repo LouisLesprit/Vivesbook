@@ -5,6 +5,7 @@
  */
 package ui;
 
+import bags.Account;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -118,7 +119,7 @@ public class VIVESbook extends Application {
         }
     }
     
-    public void laadHomeScherm(){
+    public void laadHomeScherm(Account account){
         try {
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource(
               "view/Home.fxml"));
@@ -126,12 +127,11 @@ public class VIVESbook extends Application {
             // controller ophalen
             Parent root = loader.load();
 
-            System.out.println(loader.getController() == null);
             HomeController controller = (HomeController) loader.getController();
             
             // referentie naar hier bewaren in de controller
             controller.setMainApp(this);
-            //controller.setData(accountLogin);
+            controller.setData(account);
 
             Scene scene = new Scene(root);
             stage.setTitle("VIVESbook - Home");

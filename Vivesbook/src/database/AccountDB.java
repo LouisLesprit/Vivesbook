@@ -19,12 +19,7 @@ public class AccountDB implements InterfaceAccountDB {
             try(PreparedStatement stmt = conn.prepareStatement(
                     "SELECT * FROM Account WHERE login = ?");){
                 
-                if(login == null){
-                    stmt.setNull(1, java.sql.Types.NULL);
-                }else{
-                    stmt.setString(1, login);
-                }
-                
+                stmt.setString(1, login);
                 stmt.execute();
                 
                 try(ResultSet r = stmt.getResultSet()){
@@ -60,12 +55,7 @@ public class AccountDB implements InterfaceAccountDB {
             try(PreparedStatement stmt = conn.prepareStatement(
                     "SELECT * FROM Account WHERE email = ?");){
                 
-                if(email == null){
-                    stmt.setNull(1, java.sql.Types.NULL);
-                }else{
-                    stmt.setString(1, email);
-                }
-                
+                stmt.setString(1, email); 
                 stmt.execute();
                 
                 try(ResultSet r = stmt.getResultSet()){
@@ -166,5 +156,41 @@ public class AccountDB implements InterfaceAccountDB {
         }catch(SQLException sqlEx){
             throw new DBException("SQL-exception in verwijderenAccount - connection" + sqlEx);
         }
+    }
+    
+    public Account inloggenAccount(String login, String paswoord) throws DBException{
+        Account returnAccount = null;
+        
+        try(Connection conn = ConnectionManager.getConnection();){
+            try(PreparedStatement stmt = conn.prepareStatement(
+                    "SELECT * FROM Account WHERE login = ? AND paswoord = ?");){
+                
+                stmt.setString(1, login);             
+                stmt.setString(2, paswoord);
+                stmt.execute();
+                
+                try(ResultSet r = stmt.getResultSet()){
+                    Account a = new Account();
+                    
+                    if(r.next()){
+                        a.setNaam(r.getString("naam"));
+                        a.setVoornaam(r.getString("voornaam"));
+                        a.setLogin(r.getString("login"));
+                        a.setPaswoord(r.getString("paswoord"));
+                        a.setEmailadres(r.getString("emailadres"));
+                        a.setGeslacht(Geslacht.valueOf(r.getString("geslacht")));
+                        returnAccount = a;
+                    }
+                    
+                    return returnAccount;
+                }catch(SQLException sqlEx){
+                    throw new DBException("SQL-exception in inloggenAccount - resultset " + sqlEx);
+                }
+            }catch(SQLException sqlEx){
+                throw new DBException("SQL-Exception in inloggenAccount - statement" + sqlEx);
+            }
+        }catch(SQLException sqlEx){
+            throw new DBException("SQL-exception in inloggenAccount - connection" + sqlEx);
+        }    
     }
 }
