@@ -59,10 +59,16 @@ public class AccountTrans implements InterfaceAccountTrans {
         
         AccountDB accDB = new AccountDB();
         
+        /*  login mag niet veranderen, email mag wel veranderen maar kijken dat nog niet gebruikt is
+        
         if(accDB.zoekAccountOpLogin(acc.getLogin()) != null){
             throw new ApplicationException("Er bestaat al een account met dezelfde login");
         }
-        if(accDB.zoekAccountOpEmail(acc.getEmailadres()) != null){
+        */
+        
+        Account accViaEmail = accDB.zoekAccountOpEmail(acc.getEmailadres());
+        
+        if(accViaEmail != null && !accViaEmail.getLogin().equals(acc.getLogin())){
             throw new ApplicationException("Er bestaat al een account met hetzelfde emailadres");
         }
         

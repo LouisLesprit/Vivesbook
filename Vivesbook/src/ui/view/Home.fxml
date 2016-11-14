@@ -6,11 +6,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.HomeController">
+<AnchorPane id="AnchorPane" fx:id="btnEditClicked" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.controller.HomeController">
    <children>
       <Label fx:id="lblLogin" layoutX="112.0" layoutY="42.0" text="Login" />
       <ListView layoutX="386.0" layoutY="59.0" prefHeight="200.0" prefWidth="200.0" />
       <Label layoutX="386.0" layoutY="34.0" text="Vrienden" />
       <Button fx:id="btnLogout" layoutX="248.0" layoutY="22.0" mnemonicParsing="false" onAction="#btnLogoutClicked" text="Logout" />
+      <Button fx:id="btnEdit" layoutX="249.0" layoutY="59.0" mnemonicParsing="false" onAction="#btnEditClicked" text="Edit your account" />
    </children>
 </AnchorPane>

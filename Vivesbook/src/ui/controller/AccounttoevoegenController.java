@@ -7,11 +7,15 @@ package ui.controller;
 
 import bags.Account;
 import datatype.Geslacht;
+import exception.ApplicationException;
+import exception.DBException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import transactie.AccountTrans;
@@ -26,11 +30,16 @@ public class AccounttoevoegenController implements Initializable{
     // referentie naar mainapp (start) 
     private VIVESbook mainApp;
     
+    private Account account;
+    
     @FXML
     private TextField txtNaam, txtVoornaam, txtLogin, txtPaswoord, txtEmailadres;
     
     @FXML
     private ComboBox cbGeslacht; // De ComboBox voor het geslacht
+    
+    @FXML
+    private Button btnAddUser, btnLogin;
 
     /**
      * Initializes the controller class.
@@ -50,9 +59,35 @@ public class AccounttoevoegenController implements Initializable{
         this.mainApp = mainApp;
     }
     
+    public void setData(Account account){
+        this.account = account;
+        
+        if(account != null){
+            txtNaam.setText(account.getNaam());
+            txtVoornaam.setText(account.getVoornaam());
+            txtLogin.setText(account.getLogin());
+            txtPaswoord.setText(account.getPaswoord());
+            txtEmailadres.setText(account.getEmailadres());
+            cbGeslacht.getSelectionModel().select(account.getGeslacht());
+            
+            btnAddUser.setText("Edit account");
+            btnLogin.setText("Cancel");
+            txtLogin.setDisable(true);
+        }
+    }
+    
     private void initializeChoiceBox(){
         cbGeslacht.getItems().add(Geslacht.M);
         cbGeslacht.getItems().add(Geslacht.V);
+    }
+    
+    public void clearFields(){
+        txtNaam.clear();
+        txtVoornaam.clear();
+        txtLogin.clear();
+        txtPaswoord.clear();
+        txtEmailadres.clear();
+        cbGeslacht.getSelectionModel().clearSelection();
     }
     
     @FXML
@@ -66,17 +101,37 @@ public class AccounttoevoegenController implements Initializable{
         newAccount.setEmailadres(txtEmailadres.getText());
         newAccount.setGeslacht((Geslacht) cbGeslacht.getSelectionModel().getSelectedItem());
 
-        AccountTrans at = new AccountTrans();
+        AccountTrans accTrans = new AccountTrans();
         
         try{
-            at.accountToevoegen(newAccount);
-        }catch(Exception e){ // NOG AANPASSEN
-            System.out.println(e);
+            if(account != null){
+                accTrans.accountWijzigen(newAccount);
+            }else{
+                accTrans.accountToevoegen(newAccount);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Succes");
+                alert.setHeaderText(null);
+                alert.setContentText("Account werd aangemaakt");
+                alert.showAndWait();
+                clearFields();
+            }
+        }catch(DBException ex){ // NOG AANPASSEN
+            System.out.println(ex);
+        }catch(ApplicationException ex){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText(ex.getMessage());
+            alert.showAndWait();
         }
     }
     
     @FXML
     private void btnLoginClicked(ActionEvent event){
-        mainApp.laadLoginScherm();
+        if(account != null){
+            mainApp.laadHomeScherm(account);
+        }else{
+            mainApp.laadLoginScherm();
+        }
     }
 }

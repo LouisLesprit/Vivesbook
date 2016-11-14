@@ -98,7 +98,7 @@ public class VIVESbook extends Application {
 
     }
     
-    public void laadAccounttoevoegenScherm(){
+    public void laadAccounttoevoegenScherm(Account account){
         try {
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource(
               "view/Accounttoevoegen.fxml"));
@@ -109,6 +109,7 @@ public class VIVESbook extends Application {
             
             // referentie naar hier bewaren in de controller
             controller.setMainApp(this);
+            controller.setData(account);
 
             Scene scene = new Scene(root);
             stage.setTitle("VIVESbook - Account toevoegen");

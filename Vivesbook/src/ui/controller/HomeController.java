@@ -6,16 +6,14 @@
 package ui.controller;
 
 import bags.Account;
-import exception.DBException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import ui.VIVESbook;
-import transactie.AccountTrans;
 
 /**
  * FXML Controller class
@@ -31,6 +29,9 @@ public class HomeController implements Initializable {
     
     @FXML
     private Label lblLogin;
+    
+    @FXML
+    private Button btnEdit;
     
     /**
      * Initializes the controller class.
@@ -69,5 +70,10 @@ public class HomeController implements Initializable {
         */
         
         mainApp.laadLoginScherm();
+    }
+    
+    @FXML
+    private void btnEditClicked(ActionEvent event){
+        mainApp.laadAccounttoevoegenScherm(account);
     }
 }

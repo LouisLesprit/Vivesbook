@@ -80,6 +80,6 @@ public class LoginController implements Initializable {
     
     @FXML
     private void btnNewUserClicked(ActionEvent event){
-        mainApp.laadAccounttoevoegenScherm();
+        mainApp.laadAccounttoevoegenScherm(null);
     }
 }

@@ -53,7 +53,7 @@ public class AccountDB implements InterfaceAccountDB {
         
         try(Connection conn = ConnectionManager.getConnection();){
             try(PreparedStatement stmt = conn.prepareStatement(
-                    "SELECT * FROM Account WHERE email = ?");){
+                    "SELECT * FROM Account WHERE emailadres = ?");){
                 
                 stmt.setString(1, email); 
                 stmt.execute();
@@ -73,13 +73,13 @@ public class AccountDB implements InterfaceAccountDB {
                     
                     return returnAccount;
                 }catch(SQLException sqlEx){
-                    throw new DBException("SQL-exception in zoekAccountOpEmail - resultset " + sqlEx);
+                    throw new DBException("SQL-exception in zoekAccountOpEmail - resultset - " + sqlEx);
                 }
             }catch(SQLException sqlEx){
-                throw new DBException("SQL-Exception in zoekAccountOpEmail - statement" + sqlEx);
+                throw new DBException("SQL-Exception in zoekAccountOpEmail - statement - " + sqlEx);
             }
         }catch(SQLException sqlEx){
-            throw new DBException("SQL-exception in zoekAccountOpEmail - connection" + sqlEx);
+            throw new DBException("SQL-exception in zoekAccountOpEmail - connection - " + sqlEx);
         }    
     }
 
@@ -111,6 +111,7 @@ public class AccountDB implements InterfaceAccountDB {
         }
     }
 
+    // login van een account mag niet wijzigen
     @Override
     public void wijzigenAccount(Account teWijzigenAccount) throws DBException {
         try(Connection conn = ConnectionManager.getConnection();){
