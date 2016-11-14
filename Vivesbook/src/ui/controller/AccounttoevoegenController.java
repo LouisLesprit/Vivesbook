@@ -63,17 +63,21 @@ public class AccounttoevoegenController implements Initializable{
         this.account = account;
         
         if(account != null){
-            txtNaam.setText(account.getNaam());
-            txtVoornaam.setText(account.getVoornaam());
-            txtLogin.setText(account.getLogin());
-            txtPaswoord.setText(account.getPaswoord());
-            txtEmailadres.setText(account.getEmailadres());
-            cbGeslacht.getSelectionModel().select(account.getGeslacht());
+            setFields(account);
             
             btnAddUser.setText("Edit account");
             btnLogin.setText("Cancel");
             txtLogin.setDisable(true);
         }
+    }
+    
+    public void setFields(Account account){
+        txtNaam.setText(account.getNaam());
+        txtVoornaam.setText(account.getVoornaam());
+        txtLogin.setText(account.getLogin());
+        txtPaswoord.setText(account.getPaswoord());
+        txtEmailadres.setText(account.getEmailadres());
+        cbGeslacht.getSelectionModel().select(account.getGeslacht());
     }
     
     private void initializeChoiceBox(){
@@ -90,29 +94,43 @@ public class AccounttoevoegenController implements Initializable{
         cbGeslacht.getSelectionModel().clearSelection();
     }
     
+    public Account getAccountFromFields(){
+        Account acc = new Account();
+
+        acc.setNaam(txtNaam.getText());
+        acc.setVoornaam(txtVoornaam.getText());
+        acc.setLogin(txtLogin.getText());
+        acc.setPaswoord(txtPaswoord.getText());
+        acc.setEmailadres(txtEmailadres.getText());
+        acc.setGeslacht((Geslacht) cbGeslacht.getSelectionModel().getSelectedItem());
+        
+        return acc;
+    }
+    
     @FXML
     private void btnAddUserClicked(ActionEvent event){
-        Account newAccount = new Account();
-
-        newAccount.setNaam(txtNaam.getText());
-        newAccount.setVoornaam(txtVoornaam.getText());
-        newAccount.setLogin(txtLogin.getText());
-        newAccount.setPaswoord(txtPaswoord.getText());
-        newAccount.setEmailadres(txtEmailadres.getText());
-        newAccount.setGeslacht((Geslacht) cbGeslacht.getSelectionModel().getSelectedItem());
+        Account newAccount = getAccountFromFields();
 
         AccountTrans accTrans = new AccountTrans();
         
         try{
             if(account != null){
                 accTrans.accountWijzigen(newAccount);
+                
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Succes");
+                alert.setHeaderText(null);
+                alert.setContentText("Account werd aangepast");
+                alert.showAndWait();
             }else{
                 accTrans.accountToevoegen(newAccount);
+                
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Succes");
                 alert.setHeaderText(null);
                 alert.setContentText("Account werd aangemaakt");
                 alert.showAndWait();
+                
                 clearFields();
             }
         }catch(DBException ex){ // NOG AANPASSEN
