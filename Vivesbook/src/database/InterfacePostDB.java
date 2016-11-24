@@ -23,5 +23,8 @@ public interface InterfacePostDB {
     public void verwijderenPost(Integer id) throws DBException;
 
     public Integer toevoegenPost(Post post) throws DBException;
+    
+    public ArrayList<Post> zoekPosts(String login) throws DBException;
 
 }
+
